@@ -26,6 +26,15 @@ def checkProcenTrue(y_test, y_pred):
             count_right +=1
     print(f"Процент верных предсказаний - ", count_right/len(y_test)* 100, "%")
 
+def makeGraphic(predicted_values, real_values ):
+    residuals = real_values - predicted_values
+    plt.scatter(predicted_values, residuals)
+    plt.xlabel('Предсказанные значения')
+    plt.ylabel('Остатки')
+    plt.title('График остатков')
+    plt.axhline(y=0, color='r', linestyle='--') # Горизонтальная линия на нулевом уровне
+    plt.show()
+
 def makeLarsModel(features, target, strinName):
     scaler = MinMaxScaler()
     features_normalized = scaler.fit_transform(features)
@@ -38,6 +47,11 @@ def makeLarsModel(features, target, strinName):
     print(f"\tДля {strinName}:\t")
     print(f"Среднее качесвто регрессии - ", mean_score)
     checkProcenTrue(y_test, y_pred)
+
+    y_graph = []
+    for i in range(len(y_test)):
+        y_graph.append(y_test[i][0])
+    # makeGraphic(y_pred, y_graph)
 
 def main(): 
     data = pd.read_csv('winequalityN.csv')
