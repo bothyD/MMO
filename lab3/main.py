@@ -6,6 +6,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Lars
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import mean_absolute_error
 
 def impute(dataset):
     imputer = SimpleImputer(missing_values=np.NaN, strategy='mean')
@@ -46,6 +47,8 @@ def makeLarsModel(features, target, strinName):
     mean_score = np.mean(score)
     print(f"\tДля {strinName}:\t")
     print(f"Среднее качесвто регрессии - ", mean_score)
+    mae = mean_absolute_error(y_test, y_pred)
+    print(f'Средняя абсолютная ошибка (MAE): {mae}')
     checkProcenTrue(y_test, y_pred)
 
     y_graph = []
